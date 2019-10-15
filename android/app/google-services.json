@@ -1,0 +1,74 @@
+{
+  "project_info": {
+    "project_number": "360366205545",
+    "firebase_url": "https://yoga-guru-1.firebaseio.com",
+    "project_id": "yoga-guru-1",
+    "storage_bucket": "yoga-guru-1.appspot.com"
+  },
+  "client": [{
+      "client_info": {
+        "mobilesdk_app_id": "1:360366205545:android:941f12a91974df14c790f8",
+        "android_client_info": {
+          "package_name": "com.example.yoga_guru"
+        }
+      },
+      "oauth_client": [{
+          "client_id": "360366205545-tgafhjeei7c41l7ns9b8nrnn0nic17lr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yoga_guru",
+            "certificate_hash": "7591e5b3edff36b165b8db3ec808160d4d145201"
+          }
+        },
+        {
+          "client_id": "360366205545-2apuibm976qk9opcqoohr12sg5dn3vc9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [{
+        "current_key": "AIzaSyASBEDOhc3P0phQ_QKnHoaVxVVY5I23HWo"
+      }],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [{
+            "client_id": "360366205545-2apuibm976qk9opcqoohr12sg5dn3vc9.apps.googleusercontent.com",
+            "client_type": 3
+          }]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360366205545:android:bc30c9affbc55689c790f8",
+        "android_client_info": {
+          "package_name": "com.example.yogaguru"
+        }
+      },
+      "oauth_client": [{
+          "client_id": "360366205545-s7rmdqcso86utjrvcg71vdhcbqbnlv6i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yogaguru",
+            "certificate_hash": "7591e5b3edff36b165b8db3ec808160d4d145201"
+          }
+        },
+        {
+          "client_id": "360366205545-2apuibm976qk9opcqoohr12sg5dn3vc9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [{
+        "current_key": "AIzaSyASBEDOhc3P0phQ_QKnHoaVxVVY5I23HWo"
+      }],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [{
+            "client_id": "360366205545-2apuibm976qk9opcqoohr12sg5dn3vc9.apps.googleusercontent.com",
+            "client_type": 3
+          }]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
