@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 List<dynamic> _inputArr = [];
-String _label;
+String _label = 'Wrong Pose';
 
 class BndBox extends StatelessWidget {
   static const platform = const MethodChannel('ondeviceML');
