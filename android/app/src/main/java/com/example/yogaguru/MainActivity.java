@@ -29,17 +29,24 @@ public class MainActivity extends FlutterActivity {
 		super.onCreate(savedInstanceState);
 		GeneratedPluginRegistrant.registerWith(this);
 
-		try {
-			tflite = new Interpreter(loadModelFile());
-		} catch (Exception e) {
-			System.out.println("Exception while loading: " + e);
-			throw new RuntimeException(e);
-		}
+		// try {
+		// tflite = new Interpreter(loadModelFile());
+		// } catch (Exception e) {
+		// System.out.println("Exception while loading: " + e);
+		// throw new RuntimeException(e);
+		// }
 
 		new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(new MethodCallHandler() {
 			@Override
 			public void onMethodCall(MethodCall call, Result result) {
 				if (call.method.equals("predictData")) {
+
+					try {
+						tflite = new Interpreter(loadModelFile(call.argument("model")));
+					} catch (Exception e) {
+						System.out.println("Exception while loading: " + e);
+						throw new RuntimeException(e);
+					}
 					ArrayList<Double> args = call.argument("arg");
 					String prediction = predictData(args);
 					if (prediction != null) {
@@ -80,10 +87,8 @@ public class MainActivity extends FlutterActivity {
 
 	// method to load tflite file from device
 
-	private MappedByteBuffer loadModelFile() throws Exception {
-		// InputStream inputStream =
-		// this.getResources().openRawResource(R.raw.yoga_classifier);
-		AssetFileDescriptor fileDescriptor = this.getAssets().openFd("yoga_classifier.tflite");
+	private MappedByteBuffer loadModelFile(String modelName) throws Exception {
+		AssetFileDescriptor fileDescriptor = this.getAssets().openFd(modelName);
 		FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
 		FileChannel fileChannel = inputStream.getChannel();
 		long startOffset = fileDescriptor.getStartOffset();

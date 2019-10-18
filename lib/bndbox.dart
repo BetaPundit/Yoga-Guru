@@ -111,8 +111,10 @@ class BndBox extends StatelessWidget {
 
   Future<void> _getPrediction(List<double> poses) async {
     try {
-      final String result = await platform
-          .invokeMethod('predictData', {"arg": poses}); // passing arguments
+      final String result = await platform.invokeMethod('predictData', {
+        "model": customModel,
+        "arg": poses,
+      }); // passing arguments
       _label = result.toString();
       print("Final Label: " + result);
     } on PlatformException catch (e) {

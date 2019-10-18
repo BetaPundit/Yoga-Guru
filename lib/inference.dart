@@ -52,7 +52,7 @@ class _InferencePageState extends State<InferencePage> {
             previewW: min(_imageHeight, _imageWidth),
             screenH: screen.height,
             screenW: screen.width,
-            customModel: 'assets/models/yoga_classifier.tflite',
+            customModel: 'yoga_classifier.tflite',
           ),
         ],
       ),
