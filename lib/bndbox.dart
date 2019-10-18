@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-var _prediction;
+List<dynamic> _inputArr = [];
+String _label;
 
 class BndBox extends StatelessWidget {
   static const platform = const MethodChannel('ondeviceML');
@@ -24,45 +25,6 @@ class BndBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Run yoga_classifier.tflite
-    var result = _getPrediction([
-      520.2962666495902,
-      174.74581960904396,
-      516.421202612705,
-      166.1106277724444,
-      517.1866034836066,
-      169.72461765095338,
-      482.35434810450823,
-      153.16652976860433,
-      506.7509925717213,
-      157.52833479541843,
-      480.65266393442624,
-      167.4305699235302,
-      471.22099129098365,
-      161.58514507746293,
-      410.9952932889344,
-      112.47123071702859,
-      415.39052894467216,
-      107.47942649711996,
-      397.2461898053279,
-      56.887098409361755,
-      397.5016329405738,
-      55.84913092144465,
-      412.57383452868856,
-      154.33921167405984,
-      390.8998463114754,
-      151.82183734441207,
-      467.5105660860656,
-      216.89435538599045,
-      466.2657210553279,
-      215.65033993478548,
-      495.047387295082,
-      308.1580003641419,
-      495.19118212090166,
-      309.76721812102755
-    ]);
-    print('Custom Model: ' + result.toString());
-
     List<Widget> _renderKeypoints() {
       var lists = <Widget>[];
       results.forEach((re) {
@@ -87,6 +49,10 @@ class BndBox extends StatelessWidget {
           print('x: ' + x.toString());
           print('y: ' + y.toString());
 
+          _inputArr.add(x);
+          _inputArr.add(y);
+
+          // To solve mirror problem on front camera
           if (x > 320) {
             var temp = x - 320;
             x = 320 - temp;
@@ -112,22 +78,43 @@ class BndBox extends StatelessWidget {
           );
         }).toList();
 
+        print("Input Arr: " + _inputArr.toList().toString());
+        _getPrediction(_inputArr.cast<double>().toList());
+
+        _inputArr.clear();
+        print("Input Arr after clear: " + _inputArr.toList().toString());
+
         lists..addAll(list);
       });
-
       return lists;
     }
 
-    return Stack(
-      children: _renderKeypoints(),
-    );
+    return Stack(children: <Widget>[
+      Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Text(
+            '$_label',
+            style: TextStyle(
+              fontSize: 50,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+      Stack(
+        children: _renderKeypoints(),
+      ),
+    ]);
   }
 
-  Future<String> _getPrediction(List<double> poses) async {
+  Future<void> _getPrediction(List<double> poses) async {
     try {
       final String result = await platform
           .invokeMethod('predictData', {"arg": poses}); // passing arguments
-      return result;
+      _label = result.toString();
+      print("Final Label: " + result);
     } on PlatformException catch (e) {
       return e.message;
     }

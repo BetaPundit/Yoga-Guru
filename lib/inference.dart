@@ -64,6 +64,7 @@ class _InferencePageState extends State<InferencePage> {
       _recognitions = recognitions;
       _imageHeight = imageHeight;
       _imageWidth = imageWidth;
+      // _label = label;
     });
   }
 

@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
 
@@ -18,6 +19,8 @@ class Camera extends StatefulWidget {
 class _CameraState extends State<Camera> {
   CameraController controller;
   bool isDetecting = false;
+
+  static const platform = const MethodChannel('ondeviceML');
 
   @override
   void initState() {
@@ -58,20 +61,6 @@ class _CameraState extends State<Camera> {
             ).then((recognitions) {
               int endTime = new DateTime.now().millisecondsSinceEpoch;
               print("Detection took ${endTime - startTime}");
-
-              // try {
-              //   print(
-              //       'Recognitions: ' + recognitions[0]['keypoints'].toString());
-              // } catch (e) {
-              //   print('error:' + e);
-              // }
-              // print('Image width: ' + (img.width / 2).toString());
-              // var keypoints = recognitions[0]['keypoints'];
-              // for (int i = 0; i < 17; i++) {
-              //   if (keypoints[i]['x'] < (img.width / 2)) {}
-              // }
-
-              // recognitions[1]
 
               widget.setRecognitions(recognitions, img.height, img.width);
 
