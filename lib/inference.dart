@@ -11,8 +11,9 @@ class InferencePage extends StatefulWidget {
   final List<CameraDescription> cameras;
   final String title;
   final String model;
+  final String customModel;
 
-  const InferencePage({this.cameras, this.title, this.model});
+  const InferencePage({this.cameras, this.title, this.model, this.customModel});
 
   @override
   _InferencePageState createState() => _InferencePageState();
@@ -22,7 +23,6 @@ class _InferencePageState extends State<InferencePage> {
   List<dynamic> _recognitions;
   int _imageHeight = 0;
   int _imageWidth = 0;
-  String _label = '';
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _InferencePageState extends State<InferencePage> {
             previewW: min(_imageHeight, _imageWidth),
             screenH: screen.height,
             screenW: screen.width,
-            customModel: 'yoga_classifier.tflite',
+            customModel: widget.customModel,
           ),
         ],
       ),

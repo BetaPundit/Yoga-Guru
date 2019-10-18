@@ -1,8 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:tflite/tflite.dart';
-import 'package:yoga_guru/inference.dart';
+import 'package:yoga_guru/beginner_poses.dart';
 import 'package:yoga_guru/login.dart';
+import 'package:yoga_guru/size_route.dart';
 
 import 'auth.dart';
 
@@ -151,15 +151,10 @@ class Home extends StatelessWidget {
   }
 
   void _onBeginnerSelect(BuildContext context) async {
-    // String res = await Tflite.loadModel(
-    //   model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
-    // );
-    // print('Model Response:' + res);
-
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => InferencePage(
+      SizeRoute(
+        page: BeginnerPoses(
           cameras: cameras,
           title: 'Beginner',
           model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
