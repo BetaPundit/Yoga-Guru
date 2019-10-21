@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:yoga_guru/inference.dart';
 
-List<String> asanas = ['Trikonasana', 'Vrakshasana', 'Virbhadrasana'];
+List<String> asanas = ['Trikonasana', 'Vrikshasana', 'Virbhadrasana'];
 
 class BeginnerPoses extends StatelessWidget {
   final List<CameraDescription> cameras;
@@ -18,10 +18,7 @@ class BeginnerPoses extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.green,
         centerTitle: true,
-        title: Hero(
-          tag: 'title',
-          child: Text(title),
-        ),
+        title: Text(title),
       ),
       body: ListView.builder(
         itemCount: 3,
@@ -30,7 +27,7 @@ class BeginnerPoses extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: ListTile(
               title: Text(asanas[i]),
-              onTap: () => _onSelect(context),
+              onTap: () => _onSelect(context, asanas[i]),
             ),
           );
         },
@@ -38,15 +35,15 @@ class BeginnerPoses extends StatelessWidget {
     );
   }
 
-  void _onSelect(BuildContext context) async {
+  void _onSelect(BuildContext context, String modelName) async {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => InferencePage(
           cameras: cameras,
-          title: 'Beginner',
+          title: modelName,
           model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
-          customModel: 'yoga_classifier.tflite',
+          customModel: modelName,
         ),
       ),
     );

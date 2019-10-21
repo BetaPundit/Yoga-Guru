@@ -46,8 +46,8 @@ class BndBox extends StatelessWidget {
             x = _x * scaleW;
             y = (_y - difH / 2) * scaleH;
           }
-          print('x: ' + x.toString());
-          print('y: ' + y.toString());
+          // print('x: ' + x.toString());
+          // print('y: ' + y.toString());
 
           _inputArr.add(x);
           _inputArr.add(y);
@@ -78,11 +78,11 @@ class BndBox extends StatelessWidget {
           );
         }).toList();
 
-        print("Input Arr: " + _inputArr.toList().toString());
+        // print("Input Arr: " + _inputArr.toList().toString());
         _getPrediction(_inputArr.cast<double>().toList());
 
         _inputArr.clear();
-        print("Input Arr after clear: " + _inputArr.toList().toString());
+        // print("Input Arr after clear: " + _inputArr.toList().toString());
 
         lists..addAll(list);
       });
@@ -95,10 +95,11 @@ class BndBox extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Text(
-            '$_label',
+            _label.toString(),
             style: TextStyle(
               fontSize: 50,
               fontWeight: FontWeight.bold,
+              color: Colors.greenAccent,
             ),
           ),
         ),
@@ -111,12 +112,12 @@ class BndBox extends StatelessWidget {
 
   Future<void> _getPrediction(List<double> poses) async {
     try {
-      final String result = await platform.invokeMethod('predictData', {
+      final double result = await platform.invokeMethod('predictData', {
         "model": customModel,
         "arg": poses,
       }); // passing arguments
-      _label = result.toString();
-      print("Final Label: " + result);
+      _label = result < 0.5 ? "Wrong Pose" : result.toStringAsFixed(2);
+      print("Final Label: " + result.toString());
     } on PlatformException catch (e) {
       return e.message;
     }
