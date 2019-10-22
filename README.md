@@ -1,6 +1,6 @@
 # Yoga Guru
 
-A new Flutter project.
+**Yoga Guru** is your personalized yoga trainer app based on Flutter. It uses posenet to estimate body poses and then use these pose coordinates to predict yoga asanas.
 
 ## Getting Started
 
