@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 List<dynamic> _inputArr = [];
 String _label = 'Wrong Pose';
+double _percent = 0;
+double _counter = 0;
 
 class BndBox extends StatelessWidget {
   static const platform = const MethodChannel('ondeviceML');
@@ -90,19 +93,35 @@ class BndBox extends StatelessWidget {
     }
 
     return Stack(children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: Text(
-            _label.toString(),
-            style: TextStyle(
-              fontSize: 50,
-              fontWeight: FontWeight.bold,
-              color: Colors.greenAccent,
+      Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(32.0, 0, 32.0, 16.0),
+            child: Text(
+              _label.toString(),
+              style: TextStyle(
+                fontSize: 50,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
             ),
           ),
-        ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 25.0),
+            child: LinearPercentIndicator(
+              animation: true,
+              lineHeight: 20.0,
+              animationDuration: 500,
+              animateFromLastPercent: true,
+              percent: _counter,
+              center: Text("${(_counter * 100).toStringAsFixed(1)} %"),
+              linearStrokeCap: LinearStrokeCap.roundAll,
+              progressColor: Colors.green,
+            ),
+          ),
+        ],
       ),
       Stack(
         children: _renderKeypoints(),
@@ -116,10 +135,20 @@ class BndBox extends StatelessWidget {
         "model": customModel,
         "arg": poses,
       }); // passing arguments
+
+      _percent = result;
       _label = result < 0.5 ? "Wrong Pose" : result.toStringAsFixed(2);
+      updateCounter(_percent);
+
       print("Final Label: " + result.toString());
     } on PlatformException catch (e) {
       return e.message;
+    }
+  }
+
+  void updateCounter(perc) {
+    if (perc > 0.5) {
+      (_counter += perc / 100) >= 1 ? _counter = 1.0 : _counter += perc / 100;
     }
   }
 }
