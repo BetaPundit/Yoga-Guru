@@ -137,7 +137,8 @@ class BndBox extends StatelessWidget {
       }); // passing arguments
 
       _percent = result;
-      _label = result < 0.5 ? "Wrong Pose" : result.toStringAsFixed(2);
+      _label =
+          result < 0.5 ? "Wrong Pose" : (result * 100).toStringAsFixed(0) + "%";
       updateCounter(_percent);
 
       print("Final Label: " + result.toString());
@@ -150,5 +151,6 @@ class BndBox extends StatelessWidget {
     if (perc > 0.5) {
       (_counter += perc / 100) >= 1 ? _counter = 1.0 : _counter += perc / 100;
     }
+    print("Counter: " + _counter.toString());
   }
 }
