@@ -1,9 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:yoga_guru/beginner_poses.dart';
 import 'package:yoga_guru/login.dart';
+import 'package:yoga_guru/poses.dart';
 import 'package:yoga_guru/scale_route.dart';
 import 'package:yoga_guru/size_route.dart';
+import 'package:yoga_guru/util/pose_data.dart';
 
 import 'auth.dart';
 
@@ -95,7 +96,12 @@ class Home extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  onPressed: () => _onBeginnerSelect(context),
+                  onPressed: () => _onPoseSelect(
+                    context,
+                    'Beginner',
+                    beginnerAsanas,
+                    Colors.green,
+                  ),
                 ),
               ),
             ),
@@ -118,7 +124,12 @@ class Home extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () => _onPoseSelect(
+                    context,
+                    'Intermediate',
+                    intermediateAsanas,
+                    Colors.blue,
+                  ),
                 ),
               ),
             ),
@@ -141,7 +152,12 @@ class Home extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () => _onPoseSelect(
+                    context,
+                    'Advance',
+                    advanceAsanas,
+                    Colors.purple,
+                  ),
                 ),
               ),
             ),
@@ -151,14 +167,21 @@ class Home extends StatelessWidget {
     );
   }
 
-  void _onBeginnerSelect(BuildContext context) async {
+  void _onPoseSelect(
+    BuildContext context,
+    String title,
+    List<String> asanas,
+    Color color,
+  ) async {
     Navigator.push(
       context,
       ScaleRoute(
-        page: BeginnerPoses(
+        page: Poses(
           cameras: cameras,
-          title: 'Beginner',
+          title: title,
           model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
+          asanas: asanas,
+          color: color,
         ),
       ),
     );

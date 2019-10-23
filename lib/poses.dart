@@ -4,14 +4,14 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:yoga_guru/inference.dart';
 import 'package:yoga_guru/yoga_card.dart';
 
-List<String> asanas = ['Trikonasana', 'Vrikshasana', 'Virbhadrasana'];
-
-class BeginnerPoses extends StatelessWidget {
+class Poses extends StatelessWidget {
   final List<CameraDescription> cameras;
   final String title;
   final String model;
+  final List<String> asanas;
+  final Color color;
 
-  const BeginnerPoses({this.cameras, this.title, this.model});
+  const Poses({this.cameras, this.title, this.model, this.asanas, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class BeginnerPoses extends StatelessWidget {
                   height: 360,
                   child: YogaCard(
                     asana: asanas[index],
-                    color: Colors.green,
+                    color: color,
                   ),
                 ),
               );
