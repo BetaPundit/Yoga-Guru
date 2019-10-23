@@ -53,15 +53,15 @@ class Poses extends StatelessWidget {
     );
   }
 
-  void _onSelect(BuildContext context, String modelName) async {
+  void _onSelect(BuildContext context, String customModelName) async {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => InferencePage(
           cameras: cameras,
-          title: modelName,
+          title: customModelName,
           model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
-          customModel: modelName,
+          customModel: customModelName,
         ),
       ),
     );
