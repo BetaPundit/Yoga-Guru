@@ -36,7 +36,7 @@ class _InferencePageState extends State<InferencePage> {
     Size screen = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(widget.title),
       ),
