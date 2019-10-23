@@ -29,6 +29,8 @@ dependencies:
   camera: ^0.5.5
   shared_preferences: ^0.5.3+4
   tflite: ^1.0.4
+  percent_indicator: ^2.1.1+1
+  flutter_swiper: ^1.1.6
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +52,7 @@ flutter:
     - assets/images/profile-image.png
     - assets/models/posenet_mv1_075_float_from_checkpoints.tflite
     - assets/models/yoga_classifier.tflite
+    - assets/poses/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
