@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:yoga_guru/inference.dart';
+import 'package:yoga_guru/yoga_card.dart';
 
 List<String> asanas = ['Trikonasana', 'Vrikshasana', 'Virbhadrasana'];
 
@@ -14,23 +16,39 @@ class BeginnerPoses extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(title),
       ),
-      body: ListView.builder(
-        itemCount: 3,
-        itemBuilder: (BuildContext context, int i) {
-          return Container(
-            padding: EdgeInsets.all(8.0),
-            child: ListTile(
-              title: Text(asanas[i]),
-              onTap: () => _onSelect(context, asanas[i]),
+      body: Center(
+        child: Container(
+          height: 500,
+          child: Swiper(
+            itemCount: asanas.length,
+            loop: false,
+            viewportFraction: 0.8,
+            scale: 0.82,
+            outer: true,
+            pagination: SwiperPagination(
+              alignment: Alignment.bottomCenter,
+              margin: EdgeInsets.all(32.0),
             ),
-          );
-        },
+            onTap: (index) => _onSelect(context, asanas[index]),
+            itemBuilder: (BuildContext context, int index) {
+              return Center(
+                child: Container(
+                  height: 360,
+                  child: YogaCard(
+                    asana: asanas[index],
+                    color: Colors.green,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
