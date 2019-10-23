@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:yoga_guru/beginner_poses.dart';
 import 'package:yoga_guru/login.dart';
+import 'package:yoga_guru/scale_route.dart';
 import 'package:yoga_guru/size_route.dart';
 
 import 'auth.dart';
@@ -153,7 +154,7 @@ class Home extends StatelessWidget {
   void _onBeginnerSelect(BuildContext context) async {
     Navigator.push(
       context,
-      SizeRoute(
+      ScaleRoute(
         page: BeginnerPoses(
           cameras: cameras,
           title: 'Beginner',
