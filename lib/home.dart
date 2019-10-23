@@ -156,7 +156,7 @@ class Home extends StatelessWidget {
                     context,
                     'Advance',
                     advanceAsanas,
-                    Colors.purple,
+                    Colors.deepPurple[400],
                   ),
                 ),
               ),
