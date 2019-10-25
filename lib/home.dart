@@ -5,8 +5,7 @@ import 'package:yoga_guru/poses.dart';
 import 'package:yoga_guru/scale_route.dart';
 import 'package:yoga_guru/size_route.dart';
 import 'package:yoga_guru/util/pose_data.dart';
-
-import 'auth.dart';
+import 'package:yoga_guru/util/auth.dart';
 
 class Home extends StatelessWidget {
   final String email;

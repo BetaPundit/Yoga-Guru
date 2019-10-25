@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:yoga_guru/auth.dart';
+import 'package:yoga_guru/util/auth.dart';
 
 import 'home.dart';
 
