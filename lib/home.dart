@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:yoga_guru/login.dart';
 import 'package:yoga_guru/poses.dart';
+import 'package:yoga_guru/profile.dart';
 import 'package:yoga_guru/scale_route.dart';
 import 'package:yoga_guru/size_route.dart';
 import 'package:yoga_guru/util/pose_data.dart';
@@ -25,22 +26,38 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.black,
         title: Text('Yoga Guru'),
         centerTitle: true,
         actions: <Widget>[
-          CircleAvatar(
-            radius: 15,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: photoUrl == null
-                  ? Image.asset(
-                      'assets/images/profile-image.png',
-                      fit: BoxFit.fill,
-                    )
-                  : NetworkImage(photoUrl),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Profile(
+                  email: email,
+                  uid: uid,
+                  displayName: displayName,
+                  photoUrl: photoUrl,
+                ),
+              ),
+            ),
+            child: Hero(
+              tag: 'profile',
+              child: CircleAvatar(
+                radius: 15,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: photoUrl == null
+                      ? Image.asset(
+                          'assets/images/profile-image.png',
+                          fit: BoxFit.fill,
+                        )
+                      : NetworkImage(photoUrl),
+                ),
+              ),
             ),
           ),
           IconButton(
