@@ -31,6 +31,7 @@ dependencies:
   tflite: ^1.0.4
   percent_indicator: ^2.1.1+1
   flutter_swiper: ^1.1.6
+  image_picker: ^0.6.1+10
 
 dev_dependencies:
   flutter_test:
