@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:yoga_guru/util/auth.dart';
 
 class Profile extends StatefulWidget {
