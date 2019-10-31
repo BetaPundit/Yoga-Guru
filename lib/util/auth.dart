@@ -63,6 +63,28 @@ class Auth implements BaseAuth {
     return user.uid;
   }
 
+  Future<FirebaseUser> updateCurrentUser({
+    String displayName,
+    String photoUrl,
+  }) async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+
+    UserUpdateInfo updateInfo = UserUpdateInfo();
+    if (displayName != null) updateInfo.displayName = displayName;
+    if (photoUrl != null) updateInfo.photoUrl = photoUrl;
+    await user.updateProfile(updateInfo);
+
+    FirebaseUser currentUser = await _firebaseAuth.currentUser();
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('email', currentUser.email);
+    prefs.setString('uid', currentUser.uid);
+    prefs.setString('displayName', currentUser.displayName);
+    prefs.setString('photoUrl', currentUser.photoUrl);
+
+    return currentUser;
+  }
+
   Future<void> signOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
