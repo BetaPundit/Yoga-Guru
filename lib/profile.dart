@@ -8,7 +8,12 @@ class Profile extends StatefulWidget {
   final String displayName;
   final String photoUrl;
 
-  Profile({this.email, this.uid, this.displayName, this.photoUrl});
+  Profile({
+    this.email,
+    this.uid,
+    this.displayName,
+    this.photoUrl,
+  });
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -17,6 +22,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   bool editMode = false;
   TextEditingController _displayNameController;
+  String _titleText;
   String _displayName;
 
   @override
@@ -25,6 +31,8 @@ class _ProfileState extends State<Profile> {
       text: widget.displayName,
     );
 
+    _titleText = 'Profile';
+
     _displayName = widget.displayName;
     super.initState();
   }
@@ -32,10 +40,10 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[900],
+      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Profile'),
+        title: Text(_titleText),
         centerTitle: true,
       ),
       body: Center(
@@ -273,6 +281,7 @@ class _ProfileState extends State<Profile> {
   Future<void> _onEdit(BuildContext context) async {
     setState(() {
       editMode = !editMode;
+      _titleText = 'Update Profile';
     });
   }
 
@@ -293,6 +302,7 @@ class _ProfileState extends State<Profile> {
       _displayName = updatedUser.displayName;
       // photoUrl = updatedUser.photoUrl;
       editMode = !editMode;
+      _titleText = 'Profile';
     });
   }
 }
