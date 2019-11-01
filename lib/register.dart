@@ -71,6 +71,9 @@ class _RegisterState extends State<Register> {
             key: _registerFormKey,
             child: Column(
               children: <Widget>[
+                SizedBox(
+                  height: 10,
+                ),
                 // First Name Input
                 TextFormField(
                   controller: _firstNameInputController,
