@@ -58,12 +58,13 @@ class _InferencePageState extends State<InferencePage> {
   }
 
   setRecognitions(recognitions, imageHeight, imageWidth) {
-    setState(() {
-      _recognitions = recognitions;
-      _imageHeight = imageHeight;
-      _imageWidth = imageWidth;
-      // _label = label;
-    });
+    mounted ??
+        setState(() {
+          _recognitions = recognitions;
+          _imageHeight = imageHeight;
+          _imageWidth = imageWidth;
+          // _label = label;
+        });
   }
 
   loadModel() async {
