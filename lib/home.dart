@@ -51,7 +51,7 @@ class Home extends StatelessWidget {
               child: CircleAvatar(
                 radius: 15,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(60),
                   child: photoUrl == null
                       ? Image.asset(
                           'assets/images/profile-image.png',
