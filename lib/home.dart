@@ -80,106 +80,108 @@ class Home extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Welcome Text
-            Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Text(
-                'Welcome\n${user.displayName}',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 26,
-                  color: Colors.white,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // Welcome Text
+              Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Text(
+                  'Welcome\n${user.displayName}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 26,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ),
 
-            // Beginner Button
-            Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: ButtonTheme(
-                minWidth: 200,
-                height: 60,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: FlatButton(
-                  color: Colors.green,
-                  child: Text(
-                    'Beginner',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
+              // Beginner Button
+              Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: ButtonTheme(
+                  minWidth: 200,
+                  height: 60,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: FlatButton(
+                    color: Colors.green,
+                    child: Text(
+                      'Beginner',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () => _onPoseSelect(
+                      context,
+                      'Beginner',
+                      beginnerAsanas,
+                      Colors.green,
                     ),
                   ),
-                  onPressed: () => _onPoseSelect(
-                    context,
-                    'Beginner',
-                    beginnerAsanas,
-                    Colors.green,
-                  ),
                 ),
               ),
-            ),
 
-            // Intermediate Button
-            Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: ButtonTheme(
-                minWidth: 200,
-                height: 60,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: FlatButton(
-                  color: Colors.blue,
-                  child: Text(
-                    'Intermediate',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
+              // Intermediate Button
+              Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: ButtonTheme(
+                  minWidth: 200,
+                  height: 60,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: FlatButton(
+                    color: Colors.blue,
+                    child: Text(
+                      'Intermediate',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () => _onPoseSelect(
+                      context,
+                      'Intermediate',
+                      intermediateAsanas,
+                      Colors.blue,
                     ),
                   ),
-                  onPressed: () => _onPoseSelect(
-                    context,
-                    'Intermediate',
-                    intermediateAsanas,
-                    Colors.blue,
-                  ),
                 ),
               ),
-            ),
 
-            // Advance Button
-            Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: ButtonTheme(
-                minWidth: 200,
-                height: 60,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: FlatButton(
-                  color: Colors.deepPurple,
-                  child: Text(
-                    'Advance',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
+              // Advance Button
+              Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: ButtonTheme(
+                  minWidth: 200,
+                  height: 60,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: FlatButton(
+                    color: Colors.deepPurple,
+                    child: Text(
+                      'Advance',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () => _onPoseSelect(
+                      context,
+                      'Advance',
+                      advanceAsanas,
+                      Colors.deepPurple[400],
                     ),
                   ),
-                  onPressed: () => _onPoseSelect(
-                    context,
-                    'Advance',
-                    advanceAsanas,
-                    Colors.deepPurple[400],
-                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
