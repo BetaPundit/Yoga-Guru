@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoga_guru/home.dart';
 import 'package:yoga_guru/login.dart';
 import 'package:yoga_guru/register.dart';
+import 'package:yoga_guru/util/user.dart';
 
 List<CameraDescription> cameras;
 
@@ -16,6 +17,14 @@ Future<void> main() async {
   String displayName = prefs.getString('displayName');
   String photoUrl = prefs.getString('photoUrl');
 
+  User user = User();
+  user.setUser({
+    'email': email,
+    'displayName': displayName,
+    'uid': uid,
+    'photoUrl': photoUrl,
+  });
+
   try {
     cameras = await availableCameras();
   } on CameraException catch (e) {
@@ -25,10 +34,10 @@ Future<void> main() async {
   runApp(
     email != null && uid != null
         ? MyApp(
-            email: email,
-            uid: uid,
-            displayName: displayName,
-            photoUrl: photoUrl,
+            email: user.email,
+            uid: user.uid,
+            displayName: user.displayName,
+            photoUrl: user.photoUrl,
             cameras: cameras,
           )
         : MyApp(
@@ -60,20 +69,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: email != null && uid != null
-          ? Home(
+      initialRoute: (email != null && uid != null) ? '/' : '/login',
+      routes: <String, WidgetBuilder>{
+        '/': (BuildContext context) => Home(
               email: email,
               uid: uid,
               displayName: displayName,
               photoUrl: photoUrl,
               cameras: cameras,
-            )
-          : Login(
+            ),
+        '/login': (BuildContext context) => Login(
               cameras: cameras,
             ),
-      routes: <String, WidgetBuilder>{
-        '/home': (BuildContext context) => Home(),
-        '/login': (BuildContext context) => Login(),
         'register': (BuildContext context) => Register(),
       },
     );

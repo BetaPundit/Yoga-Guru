@@ -1,12 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yoga_guru/util/user.dart';
 
 abstract class BaseAuth {
   Future<FirebaseUser> signIn(String email, String password);
   Future<FirebaseUser> signUp(
-      String email, String password, String fname, String lname);
+    String email,
+    String password,
+    String fname,
+    String lname,
+  );
   Future<String> getCurrentUser();
+  Future<FirebaseUser> updateCurrentUser({
+    String displayName,
+    String photoUrl,
+  });
   Future<void> signOut();
 }
 
@@ -38,16 +47,24 @@ class Auth implements BaseAuth {
     String fname,
     String lname,
   ) async {
-    AuthResult user = await _firebaseAuth.createUserWithEmailAndPassword(
+    AuthResult fUser = await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
 
     UserUpdateInfo updateInfo = UserUpdateInfo();
     updateInfo.displayName = '$fname $lname';
-    await user.user.updateProfile(updateInfo);
+    await fUser.user.updateProfile(updateInfo);
 
     FirebaseUser currentUser = await _firebaseAuth.currentUser();
+
+    User user = User();
+    user.setUser({
+      'email': currentUser.email,
+      'displayName': currentUser.displayName,
+      'uid': currentUser.uid,
+      'photoUrl': currentUser.photoUrl,
+    });
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('email', currentUser.email);
@@ -67,14 +84,22 @@ class Auth implements BaseAuth {
     String displayName,
     String photoUrl,
   }) async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
+    FirebaseUser fUser = await _firebaseAuth.currentUser();
 
     UserUpdateInfo updateInfo = UserUpdateInfo();
     if (displayName != null) updateInfo.displayName = displayName;
     if (photoUrl != null) updateInfo.photoUrl = photoUrl;
-    await user.updateProfile(updateInfo);
+    await fUser.updateProfile(updateInfo);
 
     FirebaseUser currentUser = await _firebaseAuth.currentUser();
+
+    User user = User();
+    user.setUser({
+      'email': currentUser.email,
+      'displayName': currentUser.displayName,
+      'uid': currentUser.uid,
+      'photoUrl': currentUser.photoUrl,
+    });
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('email', currentUser.email);

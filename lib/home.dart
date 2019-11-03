@@ -7,6 +7,7 @@ import 'package:yoga_guru/scale_route.dart';
 import 'package:yoga_guru/size_route.dart';
 import 'package:yoga_guru/util/pose_data.dart';
 import 'package:yoga_guru/util/auth.dart';
+import 'package:yoga_guru/util/user.dart';
 
 class Home extends StatelessWidget {
   final String email;
@@ -25,6 +26,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User user = User();
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -37,10 +39,10 @@ class Home extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => Profile(
-                  email: email,
-                  uid: uid,
-                  displayName: displayName,
-                  photoUrl: photoUrl,
+                  email: user.email,
+                  uid: user.uid,
+                  displayName: user.displayName,
+                  photoUrl: user.photoUrl,
                 ),
               ),
             ),
@@ -85,7 +87,7 @@ class Home extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(32.0),
               child: Text(
-                'Welcome\n$displayName',
+                'Welcome\n${user.displayName}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 26,
