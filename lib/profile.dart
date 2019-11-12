@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:yoga_guru/util/auth.dart';
 
@@ -20,10 +22,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  bool editMode = false;
+  bool _editMode = false;
   TextEditingController _displayNameController;
   String _titleText;
   String _displayName;
+  String _photoUrl;
+  File _image;
 
   @override
   void initState() {
@@ -34,6 +38,8 @@ class _ProfileState extends State<Profile> {
     _titleText = 'Profile';
 
     _displayName = widget.displayName;
+    _photoUrl = widget.photoUrl;
+
     super.initState();
   }
 
@@ -79,7 +85,7 @@ class _ProfileState extends State<Profile> {
                                   children: <Widget>[
                                     AnimatedSwitcher(
                                       duration: Duration(milliseconds: 100),
-                                      child: editMode
+                                      child: _editMode
                                           ? _editNameWidget()
                                           : _displayNameWidget(
                                               _displayName,
@@ -180,15 +186,19 @@ class _ProfileState extends State<Profile> {
                       tag: 'profile',
                       child: CircleAvatar(
                         radius: 60,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(60),
-                          child: widget.photoUrl == null
-                              ? Image.asset(
-                                  'assets/images/profile-image.png',
-                                  fit: BoxFit.fill,
-                                )
-                              : NetworkImage(widget.photoUrl),
-                        ),
+                        backgroundImage: _editMode != true
+                            ? _photoUrl == null
+                                ? AssetImage(
+                                    'assets/images/profile-image.png',
+                                  )
+                                : NetworkImage(
+                                    _photoUrl,
+                                  )
+                            : _image == null
+                                ? AssetImage(
+                                    'assets/images/profile-image.png',
+                                  )
+                                : FileImage(_image),
                       ),
                     ),
 
@@ -200,12 +210,12 @@ class _ProfileState extends State<Profile> {
                         margin: EdgeInsets.fromLTRB(
                           0,
                           0,
-                          editMode ? 0 : 15,
-                          editMode ? 0 : 15,
+                          _editMode ? 0 : 15,
+                          _editMode ? 0 : 15,
                         ),
                         duration: Duration(milliseconds: 100),
-                        height: editMode ? 32 : 0,
-                        width: editMode ? 32 : 0,
+                        height: _editMode ? 32 : 0,
+                        width: _editMode ? 32 : 0,
                         decoration: BoxDecoration(
                           color: Colors.blueGrey[100],
                           borderRadius: BorderRadius.circular(30.0),
@@ -217,9 +227,9 @@ class _ProfileState extends State<Profile> {
                           child: Icon(
                             Icons.edit,
                             color: Colors.blueGrey[700],
-                            size: editMode ? 19 : 0,
+                            size: _editMode ? 19 : 0,
                           ),
-                          onPressed: () {},
+                          onPressed: _getImage,
                         ),
                       ),
                     )
@@ -233,13 +243,14 @@ class _ProfileState extends State<Profile> {
 
       // Edit Floating Action Button
       floatingActionButton: FloatingActionButton(
-        onPressed: () => editMode
+        onPressed: () => _editMode
             ? _onConfirmUpdate(
                 displayName: _displayNameController.text,
+                photo: _image,
               )
             : _onEdit(context),
         child: Icon(
-          editMode ? Icons.done : Icons.edit,
+          _editMode ? Icons.done : Icons.edit,
           color: Colors.blueGrey[900],
         ),
       ),
@@ -280,29 +291,83 @@ class _ProfileState extends State<Profile> {
 
   Future<void> _onEdit(BuildContext context) async {
     setState(() {
-      editMode = !editMode;
+      _editMode = !_editMode;
       _titleText = 'Update Profile';
     });
   }
 
+  Future<void> _getPhotoUrl(File photo) async {
+    Auth auth = Auth();
+    if (photo != null) {
+      String photoUrl = await auth.storeProfilePhoto(photo);
+      _photoUrl = photoUrl;
+    }
+  }
+
   void _onConfirmUpdate({
     String displayName,
-    String photoUrl,
+    File photo,
   }) async {
     Auth auth = Auth();
     var user = await auth.getCurrentUser();
     print(user);
+
+    if (photo != null) await _getPhotoUrl(photo);
+
     var updatedUser = await auth.updateCurrentUser(
       displayName: displayName ?? displayName,
-      photoUrl: photoUrl ?? photoUrl,
+      photoUrl: _photoUrl ?? _photoUrl,
     );
     print(updatedUser.displayName);
+    print(updatedUser.photoUrl);
 
     setState(() {
+      _editMode = !_editMode;
       _displayName = updatedUser.displayName;
-      // photoUrl = updatedUser.photoUrl;
-      editMode = !editMode;
+      _photoUrl = updatedUser.photoUrl;
       _titleText = 'Profile';
     });
+  }
+
+  Future _getImage() async {
+    File image = await ImagePicker.pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 256,
+      maxWidth: 256,
+    );
+    print(image.toString());
+
+    setState(() {
+      _image = image;
+    });
+
+    // Code for image cropper
+
+    // File croppedImage = await ImageCropper.cropImage(
+    //   sourcePath: _image.path,
+    //   aspectRatio: CropAspectRatio(
+    //     ratioX: 1,
+    //     ratioY: 1,
+    //   ),
+    //   // aspectRatioPresets: [
+    //   //   CropAspectRatioPreset.square,
+    //   // ],
+    //   androidUiSettings: AndroidUiSettings(
+    //     toolbarTitle: 'Image Cropper',
+    //     toolbarColor: Colors.black,
+    //     toolbarWidgetColor: Colors.white,
+    //     initAspectRatio: CropAspectRatioPreset.square,
+    //     lockAspectRatio: true,
+    //   ),
+    //   // iosUiSettings: IOSUiSettings(
+    //   //   minimumAspectRatio: 1.0,
+    //   // ),
+    // );
+
+    // print(croppedImage.toString());
+
+    // setState(() {
+    //   _image = croppedImage ?? _image;
+    // });
   }
 }

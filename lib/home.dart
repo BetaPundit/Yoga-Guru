@@ -48,16 +48,14 @@ class Home extends StatelessWidget {
             ),
             child: Hero(
               tag: 'profile',
-              child: CircleAvatar(
-                radius: 15,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(60),
-                  child: photoUrl == null
-                      ? Image.asset(
+              child: Center(
+                child: CircleAvatar(
+                  radius: 15,
+                  backgroundImage: user.photoUrl.isEmpty
+                      ? AssetImage(
                           'assets/images/profile-image.png',
-                          fit: BoxFit.fill,
                         )
-                      : NetworkImage(photoUrl),
+                      : NetworkImage(user.photoUrl),
                 ),
               ),
             ),

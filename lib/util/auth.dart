@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoga_guru/util/user.dart';
 
@@ -22,6 +25,8 @@ abstract class BaseAuth {
 class Auth implements BaseAuth {
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   static final Firestore _firestore = Firestore.instance;
+  static final StorageReference _firebaseStorageReference =
+      FirebaseStorage().ref();
 
   Future<FirebaseUser> signIn(
     String email,
@@ -78,6 +83,18 @@ class Auth implements BaseAuth {
   Future<String> getCurrentUser() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
     return user.uid;
+  }
+
+  Future<String> storeProfilePhoto(File photo) async {
+    FirebaseUser fUser = await _firebaseAuth.currentUser();
+    var fileRef = _firebaseStorageReference.child(fUser.uid);
+
+    final StorageUploadTask uploadTask = fileRef.putFile(photo);
+
+    final StorageTaskSnapshot storageTaskSnapshot =
+        (await uploadTask.onComplete);
+
+    return await storageTaskSnapshot.ref.getDownloadURL();
   }
 
   Future<FirebaseUser> updateCurrentUser({
