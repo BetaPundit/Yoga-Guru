@@ -5,8 +5,10 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath 'com.google.gms:google-services:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.5.1'
+        classpath ('com.google.gms:google-services:4.2.0') {
+            exclude group: 'com.google.guava', module: 'guava-jdk5'
+        }
         classpath 'org.tensorflow:tensorflow-lite:+'
     }
 }
