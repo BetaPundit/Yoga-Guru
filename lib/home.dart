@@ -46,18 +46,8 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            child: Hero(
-              tag: 'profile',
-              child: Center(
-                child: CircleAvatar(
-                  radius: 15,
-                  backgroundImage: user.photoUrl.isEmpty
-                      ? AssetImage(
-                          'assets/images/profile-image.png',
-                        )
-                      : NetworkImage(user.photoUrl),
-                ),
-              ),
+            child: CircleProfileImage(
+              user: user,
             ),
           ),
           IconButton(
@@ -200,6 +190,36 @@ class Home extends StatelessWidget {
           model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
           asanas: asanas,
           color: color,
+        ),
+      ),
+    );
+  }
+}
+
+class CircleProfileImage extends StatefulWidget {
+  final User user;
+  const CircleProfileImage({this.user});
+
+  @override
+  _CircleProfileImageState createState() => _CircleProfileImageState(user);
+}
+
+class _CircleProfileImageState extends State<CircleProfileImage> {
+  final User user;
+
+  _CircleProfileImageState(this.user);
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: 'profile',
+      child: Center(
+        child: CircleAvatar(
+          radius: 15,
+          backgroundImage: user.photoUrl.isEmpty
+              ? AssetImage(
+                  'assets/images/profile-image.png',
+                )
+              : NetworkImage(user.photoUrl),
         ),
       ),
     );
