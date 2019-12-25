@@ -22,6 +22,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  bool _progressBarActive = false;
   bool _editMode = false;
   TextEditingController _displayNameController;
   String _titleText;
@@ -308,6 +309,7 @@ class _ProfileState extends State<Profile> {
     String displayName,
     File photo,
   }) async {
+    _progressBarActive = true;
     Auth auth = Auth();
     var user = await auth.getCurrentUser();
     print(user);
@@ -320,8 +322,12 @@ class _ProfileState extends State<Profile> {
     );
     print(updatedUser.displayName);
     print(updatedUser.photoUrl);
+    _progressBarActive = false;
 
     setState(() {
+      if (!mounted) {
+        return;
+      }
       _editMode = !_editMode;
       _displayName = updatedUser.displayName;
       _photoUrl = updatedUser.photoUrl;
@@ -338,6 +344,9 @@ class _ProfileState extends State<Profile> {
     print(image.toString());
 
     setState(() {
+      if (!mounted) {
+        return;
+      }
       _image = image;
     });
 
