@@ -42,7 +42,7 @@ class _InferencePageState extends State<InferencePage> {
         children: <Widget>[
           Camera(
             cameras: widget.cameras,
-            setRecognitions: setRecognitions,
+            setRecognitions: _setRecognitions,
           ),
           BndBox(
             results: _recognitions == null ? [] : _recognitions,
@@ -57,7 +57,7 @@ class _InferencePageState extends State<InferencePage> {
     );
   }
 
-  setRecognitions(recognitions, imageHeight, imageWidth) {
+  _setRecognitions(recognitions, imageHeight, imageWidth) {
     if (!mounted) {
       return;
     }
