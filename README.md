@@ -94,7 +94,7 @@ You can read more about the implementation [here](https://github.com/shaqian/flu
 
 
 Reach out to me at any of the following platforms:
-- Portfolio Website: [adityasharma.me](https://adityasharma.me)
+- Portfolio Website: [adityasharma.live](https://adityasharma.live)
 - Email: [adityaas26@gmail.com](mailto:adityaas26@gmail.com)
 - Twitter: [@BetaPundit](https://twitter.com/BetaPundit)
 - LinkedIn: [aditya-sharma26](https://www.linkedin.com/in/aditya-sharma26/)
