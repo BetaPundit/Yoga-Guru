@@ -22,6 +22,9 @@ Connect your device or start the emulator and run the following code
 # change directories
 cd Yoga-Guru
 
+# gets all the dependencies
+flutter pub get
+
 # run the app
 flutter run
 ```
