@@ -23,7 +23,7 @@ Connect your device or start the emulator and run the following code
 cd Yoga-Guru
 
 # gets all the dependencies
-flutter get pub
+flutter pub get
 
 # run the app
 flutter run
