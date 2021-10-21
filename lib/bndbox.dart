@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-List<dynamic> _inputArr = [];
-String _label = 'Wrong Pose';
-double _percent = 0;
-double _counter = 0;
-
-class BndBox extends StatelessWidget {
+class BndBox extends StatefulWidget {
   static const platform = const MethodChannel('ondeviceML');
 
   final List<dynamic> results;
@@ -27,25 +22,48 @@ class BndBox extends StatelessWidget {
   });
 
   @override
+  _BndBoxState createState() => _BndBoxState();
+}
+
+class _BndBoxState extends State<BndBox> {
+  List<dynamic> _inputArr = [];
+  String _label = 'Wrong Pose';
+  double _percent = 0;
+  double _counter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _counter = 0;
+  }
+
+  void resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<Widget> _renderKeypoints() {
       var lists = <Widget>[];
-      results.forEach((re) {
+      widget.results.forEach((re) {
         var list = re["keypoints"].values.map<Widget>((k) {
           var _x = k["x"];
           var _y = k["y"];
           var scaleW, scaleH, x, y;
 
-          if (screenH / screenW > previewH / previewW) {
-            scaleW = screenH / previewH * previewW;
-            scaleH = screenH;
-            var difW = (scaleW - screenW) / scaleW;
+          if (widget.screenH / widget.screenW >
+              widget.previewH / widget.previewW) {
+            scaleW = widget.screenH / widget.previewH * widget.previewW;
+            scaleH = widget.screenH;
+            var difW = (scaleW - widget.screenW) / scaleW;
             x = (_x - difW / 2) * scaleW;
             y = _y * scaleH;
           } else {
-            scaleH = screenW / previewW * previewH;
-            scaleW = screenW;
-            var difH = (scaleH - screenH) / scaleH;
+            scaleH = widget.screenW / widget.previewW * widget.previewH;
+            scaleW = widget.screenW;
+            var difH = (scaleH - widget.screenH) / scaleH;
             x = _x * scaleW;
             y = (_y - difH / 2) * scaleH;
           }
@@ -131,12 +149,14 @@ class BndBox extends StatelessWidget {
 
   Future<void> _getPrediction(List<double> poses) async {
     try {
-      final double result = await platform.invokeMethod('predictData', {
-        "model": customModel,
+      final double result = await BndBox.platform.invokeMethod('predictData', {
+        "model": widget.customModel,
         "arg": poses,
       }); // passing arguments
-
-      _percent = result;
+      if (result <= 1) {
+        _percent = 0;
+        _percent = result;
+      }
       _label =
           result < 0.5 ? "Wrong Pose" : (result * 100).toStringAsFixed(0) + "%";
       updateCounter(_percent);
