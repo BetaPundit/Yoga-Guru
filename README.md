@@ -1,8 +1,10 @@
 ⛔️ **DEPRECATED** - This project is no longer maintained by the author. If you wish to continue working on this, feel free to fork and continue improving on it.
 
-Thanks for your support and love! 🫶🏻
+Thanks for your love and support! 🫶🏻
 
 ---
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 # Yoga Guru
 
