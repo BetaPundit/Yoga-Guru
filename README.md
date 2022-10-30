@@ -1,3 +1,9 @@
+⛔️ **DEPRECATED** - This project is no longer maintained by the author. If you wish to continue working on this, feel free to fork and continue improving on it.
+
+Thanks for your support and love! 🫶🏻
+
+---
+
 # Yoga Guru
 
 <img src="https://github.com/adityaas26/Yoga-Guru/blob/master/screenshots/HomePage.png" alt="Home" height="350"/><img src="https://github.com/adityaas26/Yoga-Guru/blob/master/screenshots/BeginnerPage.png" alt="Beginner" height="350"/><img src="https://github.com/adityaas26/Yoga-Guru/blob/master/screenshots/IntermediatePage.png" alt="Intermediate" height="350"/><img src="https://github.com/adityaas26/Yoga-Guru/blob/master/screenshots/AdvancePage.png" alt="Advance" height="350"/>
